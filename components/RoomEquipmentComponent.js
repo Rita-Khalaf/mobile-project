@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import { ScrollView, Image, View, Text, Button } from 'react-native';
+import { ScrollView, View, Text, Button } from 'react-native';
 import { putEquipment } from '../redux/ActionCreators';
 import { connect } from 'react-redux';
 import { Slider, Icon } from 'react-native-elements';
-import * as Animatable from 'react-native-animatable';
 import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
 
@@ -26,8 +25,8 @@ const EquipmentForm = (props) => {
     var [currentGoal, setCurrentGoal] = useState(props.equipmentGoal);
     var [auto, setAuto] = useState(props.equipmentAuto);
 
-    const obtainNotificationPermission=()=> {
-        let permission =  Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+    const obtainNotificationPermission=async ()=> {
+        let permission =  await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
         if (permission.status !== 'granted') {
         permission = Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
         if (permission.status !== 'granted') {
@@ -48,7 +47,6 @@ const EquipmentForm = (props) => {
         trigger: { seconds: 2 },
         });
         }
-
 
     const handleState = () => {
         turnedOn = !turnedOn;
